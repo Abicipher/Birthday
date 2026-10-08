@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Galaxy ❤️</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;min-height:100%;font-family:Georgia,"Times New Roman",serif;background:#02010b;color:#fff;overflow-x:hidden}
+body{min-height:100vh;min-height:100dvh}
+button,input{font-family:inherit}
+.screen{display:none;min-height:100vh;min-height:100dvh;width:100%;position:relative;overflow:hidden;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+.screen.active{display:flex}
+.screen>:not(.stars){position:relative;z-index:1}
+.space{background:radial-gradient(circle at 50% 50%,#35105e 0%,#10052b 35%,#02010b 75%)}
+
+/* stars */
+.stars,.stars::before,.stars::after{position:absolute;inset:0;content:"";pointer-events:none;z-index:0;
+background-image:radial-gradient(circle,#fff 1px,transparent 1px),radial-gradient(circle,#ffd9fa 1px,transparent 1px),radial-gradient(circle,#b7d9ff 1px,transparent 1px);
+background-size:90px 90px,140px 140px,190px 190px;background-position:0 0,30px 40px,80px 20px;opacity:.65}
+.stars::before{animation:starsMove 18s linear infinite;opacity:.35}
+.stars::after{animation:starsMove 28s linear reverse infinite;opacity:.25}
+@keyframes starsMove{to{background-position:0 90px,30px 180px,80px 210px}}
+
+/* countdown */
+.countdown-small{font-size:18px;letter-spacing:5px;color:#e5c7ff;margin-bottom:20px}
+#countNumber{font-size:clamp(7rem,30vw,18rem);font-weight:bold;line-height:.8;text-shadow:0 0 20px #fff,0 0 50px #cf6cff,0 0 100px #9d25ff;animation:countPop .9s ease}
+@keyframes countPop{0%{opacity:0;transform:scale(1.8)}55%{opacity:1;transform:scale(.9)}100%{transform:scale(1)}}
+
+/* birthday */
+.happy-text{font-family:cursive;font-size:clamp(3rem,12vw,8rem);line-height:1.05;color:#fff1fa;text-shadow:0 0 15px #ffb8e5,0 0 40px #ff4fc1,0 0 90px #ff1493;animation:birthdayReveal 2s ease forwards;padding:20px}
+.name-reveal{font-size:clamp(1.3rem,5vw,2.5rem);color:#ffd5ed;margin-top:20px;opacity:0;animation:fadeUp 2s 1s forwards}
+@keyframes birthdayReveal{0%{opacity:0;transform:scale(.2) rotate(-8deg);filter:blur(15px)}70%{transform:scale(1.08)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+/* bouquet */
+#bouquetScreen{padding:30px 18px}
+.bouquet{width:260px;height:330px;animation:bouquetFloat 3s ease-in-out infinite}
+@keyframes bouquetFloat{50%{transform:translateY(-12px)}}
+.flower{position:absolute;font-size:75px;filter:drop-shadow(0 0 15px #ff80c8);animation:flowerOpen 1.5s ease forwards}
+.f1{left:5px;top:50px}.f2{left:85px;top:5px}.f3{right:0;top:50px}.f4{left:55px;top:100px}.f5{right:35px;top:105px}
+.stem{position:absolute;width:9px;height:170px;background:#318044;bottom:15px;left:125px;transform:rotate(-3deg);border-radius:10px}
+.ribbon{position:absolute;bottom:0;left:90px;width:75px;height:70px;background:#e75c9d;clip-path:polygon(50% 20%,100% 0,82% 100%,50% 70%,18% 100%,0 0);filter:drop-shadow(0 0 12px #ff71b5)}
+@keyframes flowerOpen{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+.section-title{font-size:clamp(2rem,8vw,4rem);color:#ffd9ed;text-shadow:0 0 25px #ff5db7}
+.continue-btn{padding:14px 30px;border:1px solid #ffffff55;border-radius:50px;color:#fff;background:#ffffff18;cursor:pointer;box-shadow:0 0 25px #ff4db766;transition:.3s;margin:10px}
+.continue-btn:hover{transform:scale(1.06);background:#ff4da833}
+
+/* letter */
+#letterScreen{padding:25px 15px}
+.envelope{width:min(90vw,620px);min-height:420px;padding:35px 25px;border-radius:10px;background:linear-gradient(135deg,#fff4e6,#ffd9e8);color:#5b183b;box-shadow:0 0 30px #ff9fce88,0 25px 70px #0009;animation:letterOpen 1.2s ease;text-align:left}
+@keyframes letterOpen{from{opacity:0;transform:translateY(80px) rotateX(60deg)}to{opacity:1;transform:none}}
+.letter-title{font-size:2rem;margin-bottom:25px}
+.letter-text{font-size:clamp(1rem,4vw,1.35rem);line-height:1.9;white-space:pre-line}
+.letter-sign{margin-top:25px;font-size:1.2rem;font-weight:bold}
+
+/* gallery */
+.gallery-info{padding:15px}
+.gallery-info h1{font-size:clamp(2rem,8vw,4rem);color:#f4ddff;text-shadow:0 0 25px #9e54ff;margin:0 0 10px}
+.gallery-info p{color:#d9c8ef;margin:0}
+.galaxy{width:min(100vw,900px);height:min(70vh,650px);min-height:500px;position:relative;perspective:1000px;touch-action:none;cursor:grab}
+.galaxy:active{cursor:grabbing}
+.galaxy-core{position:absolute;left:50%;top:50%;width:130px;height:130px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#fff,#f89ee0 25%,#7e3fff 55%,transparent 72%);filter:blur(2px);box-shadow:0 0 30px #ffb6e8,0 0 100px #973cff,0 0 180px #5420a8}
+.orbit{position:absolute;left:50%;top:50%;width:88%;height:65%;border:1px solid #ffffff22;border-radius:50%;transform:translate(-50%,-50%) rotateX(55deg)}
+.orbit2{width:68%;height:85%;transform:translate(-50%,-50%) rotateX(65deg) rotateZ(30deg)}
+.photo-card{position:absolute;width:125px;height:155px;padding:5px;border-radius:14px;background:#fff;box-shadow:0 0 20px #ff8fd688,0 12px 25px #0008;transition:transform .2s;user-select:none}
+.photo-card img{width:100%;height:100%;object-fit:cover;border-radius:10px;pointer-events:none}
+.photo-card:hover{z-index:100;transform:scale(1.18)!important}
+
+/* love */
+.love-you{font-family:cursive;font-size:clamp(5rem,22vw,15rem);line-height:.8;text-shadow:0 0 15px #ffb7dd,0 0 40px #ff4fb9,0 0 90px #ff008c;animation:lovePulse 1.8s infinite}
+.love-sub{font-size:clamp(1rem,4vw,1.6rem);color:#ffd7ec;margin:40px 0 20px}
+@keyframes lovePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+/* wishes */
+#wishesScreen{padding:25px 15px}
+.wish-box{width:min(94vw,720px);padding:30px 20px;border:1px solid #ffffff22;border-radius:30px;background:#ffffff0b;backdrop-filter:blur(15px);box-shadow:0 20px 80px #0007}
+.wish-number{color:#dcbcff;letter-spacing:3px}
+.wish-photo{width:min(80vw,400px);height:min(50vh,360px);object-fit:cover;border-radius:25px;border:3px solid #ffb5dc;box-shadow:0 0 35px #ff55b477;margin:20px auto;display:block;animation:photoReveal .8s ease}
+@keyframes photoReveal{from{opacity:0;transform:scale(.75) rotate(-4deg)}to{opacity:1;transform:none}}
+.wish-text{min-height:130px;display:flex;align-items:center;justify-content:center;font-size:clamp(1.25rem,5vw,2rem);line-height:1.6;color:#fff1fa;animation:wishIn .7s ease}
+@keyframes wishIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.progress{width:100%;height:7px;border-radius:20px;background:#ffffff18;overflow:hidden;margin:15px 0 25px}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#ff6abf,#d47cff,#6fdcff);transition:width .5s}
+.next-btn,.begin-btn{padding:14px 32px;border:0;border-radius:50px;color:#fff;font-weight:bold;background:linear-gradient(120deg,#e946a5,#7c42ed);box-shadow:0 0 25px #e946a566;cursor:pointer}
+
+/* final */
+#finalScreen{padding:25px 15px}
+.final-cake{font-size:clamp(6rem,25vw,12rem);animation:cakeBounce 1.5s infinite}
+@keyframes cakeBounce{50%{transform:translateY(-20px) rotate(3deg)}}
+.final-title{font-size:clamp(3rem,12vw,7rem);text-shadow:0 0 20px #ffb1de,0 0 50px #ff44b7,0 0 100px #9d2fff}
+.final-message{width:min(90vw,650px);font-size:clamp(1rem,4vw,1.4rem);line-height:1.8;color:#ffe2f1}
+.final-photos{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:800px;margin-top:20px}
+.final-photos img{width:85px;height:100px;object-fit:cover;border-radius:12px;border:2px solid #ffb8dd}
+
+/* floating */
+.float-item{position:fixed;pointer-events:none;z-index:1000;animation:floatAway 5s linear forwards}
+@keyframes floatAway{from{transform:translateY(20px) scale(.7) rotate(0);opacity:1}to{transform:translateY(-110vh) scale(1.4) rotate(40deg);opacity:0}}
+
+/* start */
+.start-panel{padding:25px;width:min(92vw,600px)}
+.start-panel h1{font-size:clamp(2rem,9vw,5rem);text-shadow:0 0 30px #ff5fba}
+.start-panel p{color:#e7d7f5;line-height:1.7}
+.name-input{width:min(90%,350px);padding:14px 18px;border-radius:30px;border:1px solid #ffffff55;background:#ffffff12;color:#fff;outline:none;text-align:center;margin:12px}
+.name-input::placeholder{color:#d9cbe5}
+.file-label{display:inline-block;padding:13px 22px;margin:10px;border-radius:30px;background:#ffffff15;border:1px solid #ffffff44;cursor:pointer}
+#photoInput{display:none}
+#photoStatus{color:#d9bfff;font-size:.9rem}
+.begin-btn{display:block;margin:20px auto;padding:15px 35px;font-size:1rem}
+.begin-btn:disabled{opacity:.6;cursor:default}
+
+@media (max-width:600px){
+.photo-card{width:85px;height:110px}
+.galaxy{min-height:400px;height:55vh}
+.galaxy-core{width:90px;height:90px}
+.envelope{min-height:430px;padding:25px 18px}
+.flower{font-size:60px}
+.bouquet{scale:.85}
+}
+</style>
+</head>
+<body>
+
+<section class="screen active space" id="startScreen">
+  <div class="stars"></div>
+  <div class="start-panel">
+    <h1>✨ A Secret Birthday Surprise ✨</h1>
+    <p>Something beautiful is waiting for you...<br>Tap the button to begin.</p>
+    <button class="begin-btn" id="beginBtn" onclick="beginExperience()">Start The Surprise ❤️</button>
+  </div>
+</section>
+
+<section class="screen space" id="countdownScreen">
+  <div class="stars"></div>
+  <div class="countdown-small">GET READY...</div>
+  <div id="countNumber">10</div>
+</section>
+
+<section class="screen space" id="birthdayScreen">
+  <div class="stars"></div>
+  <div class="happy-text">🎉 HAPPY<br>BIRTHDAY 🎉</div>
+  <div class="name-reveal" id="birthdayName">To someone very special ❤️</div>
+</section>
+
+<section class="screen space" id="bouquetScreen">
+  <div class="stars"></div>
+  <h1 class="section-title">A Little Something For You 💐</h1>
+  <div class="bouquet">
+    <div class="flower f1">🌹</div>
+    <div class="flower f2">🌷</div>
+    <div class="flower f3">🌹</div>
+    <div class="flower f4">🌸</div>
+    <div class="flower f5">🌺</div>
+    <div class="stem"></div>
+    <div class="ribbon"></div>
+  </div>
+  <button class="continue-btn" onclick="showScreen('letterScreen')">Open Your Letter 💌</button>
+</section>
+
+<section class="screen space" id="letterScreen">
+  <div class="stars"></div>
+  <div class="envelope">
+    <div class="letter-title">💌 A Letter For You</div>
+    <div class="letter-text" id="letterText"></div>
+    <div class="letter-sign">❤️ Always Smile ❤️</div>
+  </div>
+  <button class="continue-btn" onclick="showGallery()">Enter The Galaxy 🌌</button>
+</section>
+
+<section class="screen space" id="galleryScreen">
+  <div class="stars"></div>
+  <div class="gallery-info">
+    <h1>🌌 Our Little Galaxy</h1>
+    <p>Touch and drag the galaxy to move the memories.<br>Tap a photo to explore it.</p>
+    <button class="continue-btn" onclick="showLove()">Continue ❤️</button>
+  </div>
+  <div class="galaxy" id="galaxy">
+    <div class="galaxy-core"></div>
+    <div class="orbit"></div>
+    <div class="orbit orbit2"></div>
+  </div>
+</section>
+
+<section class="screen space" id="loveScreen">
+  <div class="stars"></div>
+  <div class="love-you">LOVE<br>YOU ❤️</div>
+  <div class="love-sub" id="loveName">More than words can say...</div>
+  <button class="continue-btn" onclick="startWishes()">20 Wishes Are Waiting 💌</button>
+</section>
+
+<section class="screen space" id="wishesScreen">
+  <div class="stars"></div>
+  <div class="wish-box">
+    <div class="wish-number" id="wishNumber">WISH 1 / 20</div>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    <img id="wishPhoto" class="wish-photo" alt="Birthday memory">
+    <div class="wish-text" id="wishText">Your first wish is waiting...</div>
+    <button class="next-btn" id="nextWishButton" onclick="nextWish()">Next Wish ➜</button>
+  </div>
+</section>
+
+<section class="screen space" id="finalScreen">
+  <div class="stars"></div>
+  <div class="final-cake">🎂</div>
+  <div class="final-title">HAPPY BIRTHDAY!</div>
+  <h2 id="finalName">❤️ Special Person ❤️</h2>
+  <div class="final-message">
+    You made it through all 20 wishes! 🎉<br><br>
+    May every new day bring you closer to everything your heart wishes for.<br>
+    Keep smiling. Keep dreaming. Keep being amazing. ❤️
+  </div>
+  <div class="final-photos" id="finalPhotos"></div>
+  <br>
+  <button class="continue-btn" onclick="beginExperience()">Replay The Surprise 🔁</button>
+</section>
+
+<script>
+/* ====== EDIT THIS LINE: the birthday person's name ====== */
+const BIRTHDAY_NAME = "Special Person";
+
+/* Photos are loaded from the same folder as this file: 1.jpg ... 20.jpg */
+const photos = Array.from({ length: 20 }, (_, i) => (i + 1) + ".jpg");
+const birthdayPerson = BIRTHDAY_NAME;
+let currentWish = 0;
+let countdownTimer = null;
+
+const wishes = [
+  "May your birthday be filled with happiness, laughter and beautiful memories. ❤️",
+  "May every dream you carry in your heart slowly become reality. ✨",
+  "May you always have a reason to smile, even on difficult days. 😊",
+  "May this new year of your life bring you endless opportunities. 🌟",
+  "May you always be surrounded by people who truly care about you. 💕",
+  "May your heart stay kind, your mind stay strong and your smile stay bright. 🌸",
+  "May every new chapter of your life be more beautiful than the last. 📖❤️",
+  "May you travel to beautiful places and create unforgettable memories. 🌍",
+  "May success find you wherever you go. 🏆",
+  "May you always believe in yourself and your dreams. 🌈",
+  "May love, peace and happiness follow you everywhere. 💗",
+  "May every little thing you wish for bring a big smile to your face. 🥰",
+  "May your future be brighter than you can imagine. ✨",
+  "May you have countless reasons to laugh and very few reasons to cry. ❤️",
+  "May the people you love always stay close to your heart. 🫶",
+  "May this birthday mark the beginning of something wonderful. 🎂",
+  "May your life be filled with adventures worth remembering. 🌌",
+  "May you become even stronger, wiser and happier this year. 🌟",
+  "May all your beautiful wishes find their way to you. 💐",
+  "And finally, may you always remember how special you truly are. Happy Birthday! ❤️🎉"
+];
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* ---------- start / replay ---------- */
+function beginExperience() {
+  if (countdownTimer) return;
+  document.getElementById("birthdayName").textContent = "To " + birthdayPerson + " ❤️";
+  document.getElementById("loveName").textContent = "This little universe was made for " + birthdayPerson + " ❤️";
+  document.getElementById("finalName").textContent = "❤️ " + birthdayPerson + " ❤️";
+
+  document.getElementById("letterText").textContent = [
+    "Dear " + birthdayPerson + ",",
+    "",
+    "Today isn't just another day.",
+    "",
+    "Today is the day the world became",
+    "a little brighter because you were born.",
+    "",
+    "I hope this new chapter of your life",
+    "brings you beautiful memories,",
+    "real happiness, peaceful moments,",
+    "big dreams and even bigger smiles.",
+    "",
+    "Thank you for being someone",
+    "worth celebrating.",
+    "",
+    "Happy Birthday. ❤️",
+    "",
+    "With lots of love,",
+    "Someone who wishes you the best. 💐"
+  ].join("\n");
+
+  startCountdown();
+}
+
+function startCountdown() {
+  showScreen("countdownScreen");
+  let number = 10;
+  const counter = document.getElementById("countNumber");
+  counter.textContent = number;
+
+  countdownTimer = setInterval(() => {
+    number--;
+    if (number > 0) {
+      counter.textContent = number;
+      counter.style.animation = "none";
+      void counter.offsetWidth;
+      counter.style.animation = "countPop .9s ease";
+    } else {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+      showBirthday();
+    }
+  }, 1000);
+}
+
+function showBirthday() {
+  showScreen("birthdayScreen");
+  createFloating("❤️", 10);
+  createFloating("✨", 15);
+  createFloating("🎉", 8);
+  setTimeout(() => {
+    if (document.getElementById("birthdayScreen").classList.contains("active")) {
+      showScreen("bouquetScreen");
+    }
+  }, 4500);
+}
+
+/* ---------- galaxy ---------- */
+function showGallery() {
+  showScreen("galleryScreen");
+  buildGalaxy();
+}
+
+function buildGalaxy() {
+  const galaxy = document.getElementById("galaxy");
+  galaxy.querySelectorAll(".photo-card").forEach(c => c.remove());
+
+  const centerX = galaxy.clientWidth / 2;
+  const centerY = galaxy.clientHeight / 2;
+  const radiusX = Math.min(galaxy.clientWidth * .36, 330);
+  const radiusY = Math.min(galaxy.clientHeight * .30, 210);
+
+  photos.forEach((photo, index) => {
+    const card = document.createElement("div");
+    card.className = "photo-card";
+    const img = document.createElement("img");
+    img.src = photo;
+    card.appendChild(img);
+    galaxy.appendChild(card);
+
+    const angle = (Math.PI * 2 / photos.length) * index;
+    card.style.left = (centerX + Math.cos(angle) * radiusX - card.offsetWidth / 2) + "px";
+    card.style.top = (centerY + Math.sin(angle) * radiusY - card.offsetHeight / 2) + "px";
+    card.style.transform = "rotate(" + ((Math.random() * 16) - 8) + "deg)";
+
+    card.addEventListener("click", () => {
+      if (moved > 6) return;
+      openPhoto(photo);
+    });
+  });
+}
+
+function openPhoto(src) {
+  const viewer = document.createElement("div");
+  viewer.style.cssText = "position:fixed;inset:0;z-index:9999;background:#000c;display:flex;align-items:center;justify-content:center;padding:20px";
+  const img = document.createElement("img");
+  img.src = src;
+  img.style.cssText = "max-width:95%;max-height:90%;object-fit:contain;border-radius:20px;box-shadow:0 0 50px #ff65c6";
+  viewer.appendChild(img);
+  viewer.onclick = () => viewer.remove();
+  document.body.appendChild(viewer);
+}
+
+/* ---------- galaxy drag (capture only after real movement, so taps still open photos) ---------- */
+let dragging = false, moved = 0, startX = 0, startY = 0;
+const galaxyEl = document.getElementById("galaxy");
+
+galaxyEl.addEventListener("pointerdown", e => {
+  dragging = true;
+  moved = 0;
+  startX = e.clientX;
+  startY = e.clientY;
+});
+
+galaxyEl.addEventListener("pointermove", e => {
+  if (!dragging) return;
+  const dx = e.clientX - startX;
+  const dy = e.clientY - startY;
+  moved += Math.abs(dx) + Math.abs(dy);
+  startX = e.clientX;
+  startY = e.clientY;
+
+  if (moved > 6 && !galaxyEl.hasPointerCapture(e.pointerId)) {
+    galaxyEl.setPointerCapture(e.pointerId);
+  }
+  if (moved <= 6) return;
+
+  galaxyEl.querySelectorAll(".photo-card").forEach(card => {
+    card.style.left = (parseFloat(card.style.left) + dx) + "px";
+    card.style.top = (parseFloat(card.style.top) + dy) + "px";
+  });
+});
+
+["pointerup", "pointercancel"].forEach(type =>
+  galaxyEl.addEventListener(type, () => { dragging = false; })
+);
+
+/* ---------- love / wishes / final ---------- */
+function showLove() {
+  showScreen("loveScreen");
+  createFloating("❤️", 20);
+  createFloating("💗", 15);
+  createFloating("✨", 15);
+}
+
+function startWishes() {
+  currentWish = 0;
+  showScreen("wishesScreen");
+  displayWish();
+}
+
+function displayWish() {
+  const photo = document.getElementById("wishPhoto");
+  const text = document.getElementById("wishText");
+
+  photo.src = photos[currentWish];
+  text.textContent = wishes[currentWish];
+  document.getElementById("wishNumber").textContent = "WISH " + (currentWish + 1) + " / 20";
+  document.getElementById("progressBar").style.width = ((currentWish + 1) / 20 * 100) + "%";
+
+  text.style.animation = "none";
+  void text.offsetWidth;
+  text.style.animation = "wishIn .7s ease";
+
+  photo.style.animation = "none";
+  void photo.offsetWidth;
+  photo.style.animation = "photoReveal .8s ease";
+
+  document.getElementById("nextWishButton").textContent =
+    currentWish === 19 ? "Final Celebration 🎆" : "Next Wish ➜";
+}
+
+function nextWish() {
+  if (currentWish < 19) {
+    currentWish++;
+    displayWish();
+    createFloating("❤️", 4);
+  } else {
+    finishBirthday();
+  }
+}
+
+function finishBirthday() {
+  showScreen("finalScreen");
+  createFloating("🎆", 15);
+  createFloating("🎉", 20);
+  createFloating("❤️", 20);
+  createFloating("🎈", 15);
+  createFloating("✨", 20);
+
+  const container = document.getElementById("finalPhotos");
+  container.innerHTML = "";
+  photos.forEach(photo => {
+    const img = document.createElement("img");
+    img.src = photo;
+    container.appendChild(img);
+  });
+}
+
+/* ---------- floating effects ---------- */
+function createFloating(symbol, amount) {
+  for (let i = 0; i < amount; i++) {
+    const item = document.createElement("div");
+    item.className = "float-item";
+    item.textContent = symbol;
+    item.style.left = Math.random() * 100 + "vw";
+    item.style.bottom = "-40px";
+    item.style.fontSize = (20 + Math.random() * 35) + "px";
+    item.style.animationDuration = (4 + Math.random() * 4) + "s";
+    document.body.appendChild(item);
+    setTimeout(() => item.remove(), 9000);
+  }
+}
+
+setInterval(() => {
+  const active = document.querySelector(".screen.active");
+  if (!active) return;
+  if (["birthdayScreen", "loveScreen", "finalScreen"].includes(active.id)) {
+    createFloating(Math.random() > .5 ? "❤️" : "✨", 1);
+  }
+}, 1000);
+</script>
+</body>
+</html>
