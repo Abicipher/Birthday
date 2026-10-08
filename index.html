@@ -216,10 +216,10 @@ background-size:90px 90px,140px 140px,190px 190px;background-position:0 0,30px 4
 
 <script>
 /* ====== EDIT THIS LINE: the birthday person's name ====== */
-const BIRTHDAY_NAME = "Special Person";
+const BIRTHDAY_NAME = "Angry bird";
 
-/* Photos are loaded from the same folder as this file: 1.jpg ... 20.jpg */
-const photos = Array.from({ length: 20 }, (_, i) => (i + 1) + ".jpg");
+/* Photos are loaded from the photos folder: 1.jpg ... 20.jpg */
+const photos = Array.from({ length: 20 }, (_, i) => "photos/" + (i + 1) + ".jpg");
 const birthdayPerson = BIRTHDAY_NAME;
 let currentWish = 0;
 let countdownTimer = null;
