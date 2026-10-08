@@ -1,3 +1,16 @@
+<script>
+const SITE_PASSWORD = "angrybird143";
+
+const enteredPassword = prompt("🔐 Enter the password to open this birthday surprise:");
+
+if (enteredPassword !== SITE_PASSWORD) {
+  document.documentElement.innerHTML = `
+    <body style="background:#000;color:white;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial;text-align:center;">
+      <h2>❌ Wrong password</h2>
+    </body>
+  `;
+}
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
